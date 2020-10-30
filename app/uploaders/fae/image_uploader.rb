@@ -11,7 +11,7 @@ module Fae
     end
 
     def extension_whitelist
-      %w(jpg jpeg gif png ico)
+      %w(jpg jpeg gif png ico svg)
     end
 
     # Override the directory where uploaded files will be stored.
@@ -20,9 +20,14 @@ module Fae
       "system/uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
     end
 
-    version :thumb do
+    version :thumb, if: :not_svg? do
       process :resize_to_fill => [150,100]
     end
 
+    private
+
+    def not_svg?(picture)
+      picture.extension == 'svg'
+    end
   end
 end
