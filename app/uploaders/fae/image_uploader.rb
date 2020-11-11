@@ -27,7 +27,7 @@ module Fae
     private
 
     def not_svg?(picture)
-      picture.extension == 'svg'
+      picture.extension != 'svg'
     end
   end
 end
